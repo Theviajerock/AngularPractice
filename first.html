@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <script src="angular.min.js"></script>
+        <script src="jquery-2.1.4.min.js"></script>
+
+
+        <style>
+table, th , td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+}
+table tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+</style>
+    </head>
+
+    <body>
+      <div ng-app="jsonApp" ng-controller="jsonCtrl">
+	  <div>
+	  <h3 ng-hide="hideTitle"> TEST WEBSITE</h3>
+	  Hide Title<input type="checkbox" ng-model="hideTitle"
+	  </div>
+	  
+	    <div><button ng-disabled="mySwitch"> Button test </button>
+        <input type="checkbox" ng-model="mySwitch"></div>
+		
+		<p><button ng-show="myShow">Show/Hide</button>
+		<input type="checkbox" ng-model="myShow"><p>
+		
+		<div><input type="text" ng-show="showFilter">
+		   <p>Hide or Show Filter<input type="checkbox" ng-model="showFilter"></p>
+		</div>
+		
+		<div>
+		    <button ng-click="myNumber = myNumber + 1"> Up Number </button>
+			<button ng-click="myNumber = 0"> Number to Zero </button>
+			<p>{{myNumber}}</p>
+		
+		</div>
+
+        <table>
+          <tr>
+            <th> Index </th>
+            <th> Name </th>
+            <th> Country </th>
+            <th> City </th>
+          </tr>
+          <tr ng-repeat="x in names | filter:myFilter">
+            <td> {{$index}} </td>
+            <td> {{x.Name}} </td>
+            <td> {{x.Country}} </td>
+            <td> {{x.City}} </td>
+          </tr>
+        </table>
+
+      </div>
+
+      <script>
+
+      var app = angular.module('jsonApp',[]);
+      app.controller('jsonCtrl',function($scope, $http){
+	      $scope.hideTitle = false;
+	      $scope.showFilter = false;
+	      $scope.myShow= false;
+          $scope.mySwitch = true;
+		  $scope.myNumber = 0;
+          $http.get('http://www.w3schools.com/angular/customers.php').success(function(response){
+              $scope.names = response.records;
+          });
+
+      });
+
+      </script>
+    </body>
+
+
+
+</html>

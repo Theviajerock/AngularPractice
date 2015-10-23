@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <script src="angular.min.js"></script>
+        <script src="jquery-2.1.4.min.js"></script>
+    </head>
+
+    <body>
+    	<div ng-app="myApp" ng-controller="myCtrl">
+    		<table>
+    			<tr>
+    				<th>Category</th>
+    				<th>Zipcode</th>
+    				<th>Item</th>
+                    <th>Farmer ID</th>
+                    <th>Farme Name</th>
+                    <th>Phone</th>
+
+    			</tr>
+    			<tr ng-repeat="x in names">
+    				<td>{{x.category}}</td>
+    				<td>{{x.zipcode}}</td>
+    				<td>{{x.item}}</td>
+                    <td>{{x.farmer_id}}</td>
+                    <td>{{x.farm_name}}</td>
+                    <td>{{x.phone1}}</td>
+
+    			</tr>
+
+    		</table>
+
+    	</div>
+ 
+ 		<script>
+ 		var app = angular.module('myApp',[]);
+
+ 		app.controller('myCtrl', function($scope, $http){
+ 			$http.get("https://data.ct.gov/resource/hma6-9xbg.json?category=Fruit")
+ 				.success(function(response){$scope.names = response;
+                    console.log($scope.names.category)
+                });
+
+ 		});
+
+ 		</script>
+    </body>
+
+
+
+</html>
